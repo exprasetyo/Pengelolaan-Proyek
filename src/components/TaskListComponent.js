@@ -24,7 +24,7 @@ const TaskListComponent = ({ projectId, fetchTasksrefresh, setfetchTasks }) => {
     if (projectId) {
       fetchTasks();
     }
-  }, [projectId, fetchTasksrefresh]);
+  }, [projectId, fetchTasks, fetchTasksrefresh]);
 
   return (
     <div>
