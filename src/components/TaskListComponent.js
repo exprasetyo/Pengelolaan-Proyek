@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
   Button,
   Card,
@@ -13,24 +13,18 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 const TaskListComponent = ({ projectId, fetchTasksrefresh, setfetchTasks }) => {
   const [tasks, setTasks] = useState([]);
 
-  const fetchTasks = () => {
+  const fetchTasks = useCallback(() => {
     fetch(`https://test-fe.sidak.co.id/api/projects/${projectId}/tasks`)
       .then((response) => response.json())
       .then((data) => setTasks(data))
       .catch((error) => console.error("Error fetching tasks:", error));
-  };
+  }, [projectId]); // Dependency is projectId, ensuring fetchTasks is stable
 
   useEffect(() => {
     if (projectId) {
       fetchTasks();
     }
-  }, [projectId]);
-
-  useEffect(() => {
-    if (fetchTasksrefresh) {
-      fetchTasks();
-    }
-  }, [fetchTasksrefresh]);
+  }, [projectId, fetchTasksrefresh]);
 
   return (
     <div>
